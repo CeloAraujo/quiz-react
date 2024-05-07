@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useContext } from "react";
 
@@ -8,16 +8,20 @@ import Question from "./components/Question";
 
 import "./App.css";
 
-
 function App() {
   const [quizState, dispatch] = useContext(QuizContext);
+
+  useEffect(() => {
+    // embaralhar perguntas
+    dispatch({type: "REORDER_QUESTIONS"});
+  }, []);
 
   return (
     <>
       <div className="app">
         <h1>Quiz de programação</h1>
-        {quizState.gameStage === "Start" && <Welcome/>}
-        {quizState.gameStage === "Playing" && <Question/>}
+        {quizState.gameStage === "Start" && <Welcome />}
+        {quizState.gameStage === "Playing" && <Question />}
       </div>
     </>
   );
