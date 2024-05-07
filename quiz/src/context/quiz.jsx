@@ -1,5 +1,6 @@
 import { createContext, useReducer } from "react";
 import questions from "../data/questions";
+import Over from "../components/Over";
 
 const STAGES = ["Start", "Playing", "Over"];
 
@@ -8,6 +9,7 @@ const initialState = {
   gameStage: STAGES[0],
   questions,
   currentQuestion: 0,
+  score: 0,
 };
 
 // alterar o estado
@@ -33,10 +35,22 @@ const quizReducer = (state, action) => {
     case "CHANGE_QUESTION":
       // eslint-disable-next-line no-case-declarations
       const nextQuestion = state.currentQuestion + 1;
+      // eslint-disable-next-line no-case-declarations
+      let end = false;
+      if (!questions[nextQuestion]) {
+        // eslint-disable-next-line no-unused-vars
+        end = true;
+      }
+
       return {
         ...state,
         currentQuestion: nextQuestion,
+        gameStage: end ? STAGES[2] : state.gameStage,
       };
+
+    case "NEW_GAME":
+      return initialState;
+      
     // eslint-disable-next-line no-fallthrough
     default:
       return state;
