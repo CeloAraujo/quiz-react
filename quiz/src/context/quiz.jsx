@@ -10,11 +10,12 @@ const initialState = {
   questions,
   currentQuestion: 0,
   score: 0,
+  answerSelected: false,
 };
 
 // alterar o estado
 const quizReducer = (state, action) => {
-  console.log(state, action);
+  // console.log(state, action);
 
   switch (action.type) {
     case "CHANGE_STATE":
@@ -50,7 +51,26 @@ const quizReducer = (state, action) => {
 
     case "NEW_GAME":
       return initialState;
-      
+
+    case "CHECK_ANSWER":
+      if (state.answerSelected) return state;
+
+      // eslint-disable-next-line no-case-declarations
+      const answer = action.payload.answer;
+      // eslint-disable-next-line no-case-declarations
+      const option = action.payload.option;
+      console.log(action.payload.option);
+      // eslint-disable-next-line no-case-declarations
+      let correctAnswer = 0;
+
+      if (answer === option) correctAnswer = 1;
+
+      return {
+        ...state,
+        score: state.score + correctAnswer,
+        answerSelected: option,
+      };
+
     // eslint-disable-next-line no-fallthrough
     default:
       return state;
