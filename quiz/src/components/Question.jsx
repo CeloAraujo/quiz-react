@@ -31,6 +31,7 @@ const Question = () => {
             key={option}
             answer={currentQuestion.answer}
             selectOption={() => onSelectOption(option)}
+            hide = {quizState.optionToHide === option ? "hide" : null}
           />
         ))}
       </div>
@@ -39,6 +40,9 @@ const Question = () => {
           {currentQuestion.tip && (
             <button onClick={() => dispatch({ type: "SHOW_TIP" })}>Dica</button>
           )}
+          <button onClick={() => dispatch({ type: "REMOVE_OPTION" })}>
+            Excluir uma alternativa
+          </button>
         </>
       )}
       {!quizState.answerSelected && quizState.help === "tip" && (

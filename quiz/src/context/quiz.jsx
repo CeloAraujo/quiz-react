@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import { createContext, useReducer } from "react";
 import questions from "../data/questions_complete";
 
@@ -11,6 +12,7 @@ const initialState = {
   score: 0,
   answerSelected: false,
   help: false,
+  optionToHide: null,
 };
 
 // alterar o estado
@@ -94,6 +96,25 @@ const quizReducer = (state, action) => {
         ...state,
         help: "tip",
       };
+
+    case "REMOVE_OPTION":
+      const questionWithoutOption = state.questions[state.currentQuestion];
+
+      let repeat = true;
+      let optionToHide;
+
+      questionWithoutOption.options.forEach((option) => {
+        if (option !== questionWithoutOption.answer && repeat) {
+          optionToHide = option;
+          repeat = false;
+        }
+      });
+      return {
+        ...state,
+        optionToHide,
+        help:true,
+      }
+
     // eslint-disable-next-line no-fallthrough
     default:
       return state;
