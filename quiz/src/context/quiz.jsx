@@ -1,8 +1,8 @@
 import { createContext, useReducer } from "react";
-import questions from "../data/questions";
-import Over from "../components/Over";
+import questions from "../data/questions_complete";
 
-const STAGES = ["Start", "Playing", "Over"];
+
+const STAGES = ["Start", "Category", "Playing", "Over"];
 
 const initialState = {
   // estágio atual no inicio do jogo
