@@ -10,6 +10,7 @@ const initialState = {
   currentQuestion: 0,
   score: 0,
   answerSelected: false,
+  help: false,
 };
 
 // alterar o estado
@@ -31,12 +32,12 @@ const quizReducer = (state, action) => {
         if (question.category === action.payload) {
           quizQuestions = question.questions;
         }
-      })
-      return{
+      });
+      return {
         ...state,
         questions: quizQuestions,
-        gameStage: STAGES[2]
-      }
+        gameStage: STAGES[2],
+      };
 
     case "REORDER_QUESTIONS":
       // eslint-disable-next-line no-case-declarations
@@ -53,7 +54,7 @@ const quizReducer = (state, action) => {
       const nextQuestion = state.currentQuestion + 1;
       // eslint-disable-next-line no-case-declarations
       let end = false;
-      if (!questions[nextQuestion]) {
+      if (!state.questions[nextQuestion]) {
         // eslint-disable-next-line no-unused-vars
         end = true;
       }
@@ -63,6 +64,7 @@ const quizReducer = (state, action) => {
         currentQuestion: nextQuestion,
         gameStage: end ? STAGES[3] : state.gameStage,
         answerSelected: false,
+        help: false,
       };
 
     case "NEW_GAME":
@@ -87,6 +89,11 @@ const quizReducer = (state, action) => {
         answerSelected: option,
       };
 
+    case "SHOW_TIP":
+      return {
+        ...state,
+        help: "tip",
+      };
     // eslint-disable-next-line no-fallthrough
     default:
       return state;
