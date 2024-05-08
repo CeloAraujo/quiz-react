@@ -16,10 +16,7 @@ import "./App.css";
 function App() {
   const [quizState, dispatch] = useContext(QuizContext);
 
-  useEffect(() => {
-    // embaralhar perguntas
-    dispatch({type: "REORDER_QUESTIONS"});
-  }, []);
+
 
   return (
     <>
